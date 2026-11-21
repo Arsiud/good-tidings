@@ -1,6 +1,6 @@
 // Caches the app, the translation, its notes and related passages so it opens offline. Bump VERSION when files change.
 // The family Bible app shares this site (arsiud.github.io), so only caches named "gtb-" are ours to clear.
-const VERSION = "gtb-v1";
+const VERSION = "gtb-v2";
 const FILES = ["./", "index.html", "style.css", "app.js", "chrono.js", "gtb.json", "manifest.json",
                "icon-180.png", "icon-192.png", "icon-512.png",
                ...Array.from({ length: 66 }, (_, book) => `xrefs/${book}.json`),     // related passages, for offline
