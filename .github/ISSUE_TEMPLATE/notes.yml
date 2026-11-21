@@ -1,0 +1,29 @@
+name: Suggest a change to a note
+description: A correction or addition to a translation note.
+title: "Note on "
+labels: ["notes"]
+body:
+  - type: input
+    id: reference
+    attributes:
+      label: Where the note is
+      placeholder: John 3:16
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current notes
+      description: Filled in by the app. Leave them as they are.
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Your suggestion
+      description: What should change, and how would you word it?
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Why
+      description: Sources are welcome.

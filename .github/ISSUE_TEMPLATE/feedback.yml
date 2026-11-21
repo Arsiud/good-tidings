@@ -1,0 +1,21 @@
+name: General feedback
+description: Anything else about the translation or the app.
+labels: ["feedback"]
+body:
+  - type: dropdown
+    id: about
+    attributes:
+      label: About
+      options:
+        - The translation in general
+        - Names, spellings or consistency
+        - The app (a bug or an idea)
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: feedback
+    attributes:
+      label: Your feedback
+    validations:
+      required: true

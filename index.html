@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Good Tidings Bible</title>
+  <meta name="description" content="The Good Tidings Bible: the King James Version in plain, modern English, free to read and share. Suggestions welcome.">
+  <meta name="theme-color" content="#6b4a2f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Good Tidings">
+  <link rel="icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button id="menuBtn" class="icon-btn" aria-label="Table of contents">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <button id="searchBtn" class="icon-btn small" aria-label="Search">
+      <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <h1 id="title">Good Tidings Bible</h1>
+    <button id="bookmarkBtn" class="icon-btn" aria-label="Bookmark this spot">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path d="M6.5 3.5h11v17l-5.5-4-5.5 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="displayBtn" class="icon-btn small" aria-label="Display" aria-haspopup="menu">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <section id="bibleView" class="view">
+      <article id="chapter" class="chapter"></article>
+    </section>
+    <section id="bookmarksView" class="view" hidden>
+      <div id="bookmarks" class="list-page"></div>
+    </section>
+    <section id="feedbackView" class="view" hidden>
+      <div class="list-page feedback">
+        <h2>Help make it better</h2>
+        <p>The <b>Good Tidings Bible</b> is a new translation of the King James Version into plain, modern American English. It's being checked verse by verse, and suggestions from readers go straight into it: when one is accepted, everyone gets the better wording.</p>
+        <h3>Suggest a change to a verse</h3>
+        <p><b>Hold a verse</b> while reading (tap more verses to add them), then tap <b>Suggest</b>. A form opens with the verses and their current wording filled in: write how you'd put it and why.</p>
+        <h3>Suggest a change to a note</h3>
+        <p>Tap a <b>†</b> or <b>α</b> mark after a verse, or open <b>About this chapter</b>, then <b>Suggest a change to these notes</b>.</p>
+        <h3>Anything else</h3>
+        <p>Something hard to read, a name spelled differently from one place to another, a bug in the app, or a word of encouragement.</p>
+        <button class="primary-btn wide" data-feedback>Send general feedback</button>
+        <h3>How it's sent</h3>
+        <p>Suggestions are posted publicly on GitHub, where anyone can read them and the answers. You'll need a free GitHub account to send one.</p>
+        <p><a id="issuesLink" target="_blank" rel="noopener">See all suggestions so far</a> · <a id="repoLink" target="_blank" rel="noopener">The project on GitHub</a></p>
+        <h3>Free to share</h3>
+        <p>Copyright © 2026 Yuriy Lashchuk. Free to read, copy, print and share, and to use in free apps and websites (ads and donations are fine), without asking. Selling it or changing its words needs permission: ask on GitHub. Changes are welcome as suggestions.</p>
+        <p class="hint version" id="appVersion"></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Back to where you were reading, after jumping somewhere -->
+  <div id="backBar" class="back-bar" hidden>
+    <button id="backBtn" class="back-btn"></button><button id="backClose" class="back-close" aria-label="Dismiss">✕</button>
+  </div>
+
+  <!-- Acting on picked verses -->
+  <div id="verseBar" class="verse-bar" hidden></div>
+
+  <nav class="tabbar">
+    <button class="tab active" data-view="bibleView">
+      <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5zM12 6.5v13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <span>Bible</span>
+    </button>
+    <button class="tab" data-view="bookmarksView">
+      <svg viewBox="0 0 24 24" width="24" height="24"><path d="M6.5 3.5h11v17l-5.5-4-5.5 4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <span>Bookmarks</span>
+    </button>
+    <button class="tab" data-view="feedbackView">
+      <svg viewBox="0 0 24 24" width="24" height="24"><path d="M4 5.5h16v10H9.5L5 19.5v-4H4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <span>Feedback</span>
+    </button>
+  </nav>
+
+  <!-- Table of contents drawer -->
+  <div id="scrim" class="scrim" hidden></div>
+  <aside id="drawer" class="drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <button id="drawerBack" class="text-btn" hidden>‹ Books</button>
+      <h2 id="drawerTitle">Books</h2>
+      <button id="drawerClose" class="text-btn">Close</button>
+    </div>
+    <div id="drawerBody" class="drawer-body"></div>
+  </aside>
+
+  <!-- Search -->
+  <section id="search" class="search-sheet" hidden>
+    <form id="searchForm" class="search-head" role="search">
+      <input id="searchInput" type="search" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" placeholder="Search for a word, phrase or verse">
+      <button type="button" id="searchClose" class="text-btn">Cancel</button>
+    </form>
+    <div id="searchStatus" class="search-status"></div>
+    <div id="searchResults" class="search-results"></div>
+  </section>
+
+  <!-- Related passages for picked verses -->
+  <section id="related" class="search-sheet" hidden>
+    <div class="search-head sheet-head"><h2 id="relatedTitle">Related</h2><button type="button" id="relatedClose" class="text-btn">Done</button></div>
+    <div id="relatedList" class="search-results"></div>
+  </section>
+
+  <!-- Notes on a verse -->
+  <section id="notesSheet" class="search-sheet" hidden>
+    <div class="search-head sheet-head"><h2 id="notesTitle">Notes</h2><button type="button" id="notesClose" class="text-btn">Done</button></div>
+    <div id="notesList" class="search-results notes-list"></div>
+  </section>
+
+  <!-- How to use the app (from the bottom of the books list) -->
+  <section id="help" class="search-sheet" hidden>
+    <div class="search-head sheet-head"><h2>How to use this app</h2><button type="button" id="helpClose" class="text-btn">Done</button></div>
+    <article class="help">
+      <h3>Reading</h3>
+      <ul>
+        <li>Tap <b>☰</b> to choose a book and chapter. Swipe left or right on the text for the next or previous chapter.</li>
+        <li><b>Hold the Bible tab</b> at the bottom to switch to the <b>Chronological Bible</b>: the same verses, in the order things happened, a passage at a time. <b>☰</b> then lists eras and their passages, and marks the ones you've finished. Hold it again to go back.</li>
+        <li>The <b>eye</b> sets the look: match your phone, light, dark, gray or a photo of your own, plus <b>text size</b> and <b>spacing</b>.</li>
+        <li><b>Related passages</b> at the end of each chapter lists other verses on the same things; tap one to go there.</li>
+        <li>The app remembers where you were, and works offline once it has loaded.</li>
+      </ul>
+      <h3>About the translation</h3>
+      <ul>
+        <li>The <b>Good Tidings Bible</b> renders the King James Version into plain modern English, checked against the Hebrew, Aramaic and Greek. Its name comes from Isaiah 61:1, the "good tidings" Jesus read at Nazareth as His own mission (Luke 4:18-21).</li>
+        <li>A small <b>†</b> after a verse means there's a note on it; <b>α</b> means one of its notes is about the original Hebrew, Aramaic or Greek. Tap it to read them. Tap a reference in a note to go there.</li>
+        <li>Notes on a whole chapter, psalm or book are under <b>About…</b> below the title.</li>
+        <li>Search also looks through the notes, so a word like <b>hesed</b> or <b>agape</b> finds every note on it.</li>
+        <li>To read without the marks, open the <b>eye</b> menu and turn off <b>Translation notes</b>.</li>
+      </ul>
+      <h3>Picking verses</h3>
+      <ul>
+        <li><b>Hold</b> a verse to pick it. <b>Tap</b> another verse to stretch the pick to it; tap the first or last verse to let it go.</li>
+        <li>The bar at the bottom then offers <b>Suggest</b> (propose better wording), <b>Bookmark</b>, <b>Copy</b> and <b>Related</b>. ✕ puts the pick away.</li>
+      </ul>
+      <h3>Suggestions</h3>
+      <ul>
+        <li><b>Suggest</b> opens a form on GitHub with the verses filled in. Say how you'd word it and why. You need a free GitHub account.</li>
+        <li>The <b>Feedback</b> tab sends anything else, and links to every suggestion made so far.</li>
+      </ul>
+      <h3>Bookmarks</h3>
+      <ul>
+        <li>The <b>ribbon</b> at the top drops a temporary bookmark where you are; the next tap moves it.</li>
+        <li>To keep one, tap <b>Name</b> on it in the Bookmarks tab, or pick verses and tap <b>Bookmark</b>.</li>
+        <li><b>Edit</b> a saved bookmark to rename it, add notes, change its verses or delete it.</li>
+      </ul>
+      <h3>Search and going to a verse</h3>
+      <ul>
+        <li>Tap the <b>magnifying glass</b> and type words or a phrase; close matches show too.</li>
+        <li>Or type a reference, like <b>jn 3:16</b>, <b>1 cor 13</b> or <b>Ps 23</b>, to go straight there.</li>
+        <li>After jumping somewhere, <b>‹ Back to…</b> at the top takes you back to where you were reading.</li>
+      </ul>
+    </article>
+  </section>
+
+  <div id="displayMenu" class="popover" role="menu" hidden></div>
+  <div id="orderMenu" class="popover order-menu" role="menu" hidden></div>
+  <input id="photoInput" type="file" accept="image/*" hidden>
+  <div id="backdrop" class="backdrop" hidden></div>
+
+  <!-- Name or edit a bookmark -->
+  <dialog id="bookmarkDialog">
+    <form method="dialog">
+      <h2 id="bookmarkDialogTitle">Save bookmark</h2>
+      <p id="bookmarkRef" class="hint"></p>
+      <label for="bookmarkName">Name</label>
+      <input id="bookmarkName" autocomplete="off" placeholder="e.g. Morning reading" required>
+      <label for="bookmarkNotes" class="spaced">Notes</label>
+      <textarea id="bookmarkNotes" rows="5" placeholder="Optional"></textarea>
+      <div class="dialog-actions">
+        <button value="cancel" formnovalidate class="secondary-btn">Cancel</button>
+        <button value="save" class="primary-btn">Save</button>
+      </div>
+      <button id="bookmarkVerses" value="verses" formnovalidate class="secondary-btn wide">Change verses</button>
+      <button id="bookmarkDelete" value="delete" formnovalidate class="danger-btn">Delete bookmark</button>
+    </form>
+  </dialog>
+
+  <script src="chrono.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
